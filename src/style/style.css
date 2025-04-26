@@ -1,0 +1,22 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    gap: 5%;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    gap: 5%;
+    width: 100%;
+}
