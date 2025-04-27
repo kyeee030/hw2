@@ -26,7 +26,6 @@ function Menu({ onNavigate }) {
         <div className="text-context">
             <h3 className="title">Welcome, {user.displayName}</h3>
             <div className="scrollbar">
-                <p>hi</p>
                 {chats.map((chat, index) => (
                         <div 
                             key={index} 

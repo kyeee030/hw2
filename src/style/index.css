@@ -2,6 +2,7 @@
   height: 100%;
   width: 100%;
   background-color: black;
+  background: radial-gradient(rgb(5, 5, 10), 50% rgb(10, 10, 20), 100% rgb(15, 15, 30));
   color: white;
   display: flex;
   align-items: center;

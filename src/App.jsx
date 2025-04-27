@@ -3,6 +3,7 @@ import Lobby from './components/Lobby.jsx';
 import SignIn from './components/SignIn.jsx';
 import Menu from './components/Menu.jsx';
 import AddChat from './components/AddChat.jsx';
+import Chat from './components/Chat.jsx';
 import './style/App.css';
 import './style/style.css';
 
@@ -12,11 +13,21 @@ function App() {
   const bgRef = useRef(null);
 
   const [view, setView] = useState('lobby');
+  const viewRef = useRef(view);
+  //const [, setBackgroundRadius] = useState(0.01);
+  const [imgOpacity, setImgOpacity] = useState(0);
+  const imgOpacityRef = useRef(0);
+
+  const [isChat, setIsChat] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const bg = bgRef.current;
     const ctx = canvas.getContext('2d');
+
+    let backgroundRadius = 0.01;
+
+    viewRef.current = view;
 
     let dots = [];
     let stars = [];
@@ -24,8 +35,12 @@ function App() {
     function ResizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      CreateDots();
-      CreateStars();
+      if(!isChat) {
+        CreateDots();
+        CreateStars();
+        if(view === 'chat')
+          setIsChat(true);
+      }
     }
 
     function CreateDots() {
@@ -152,21 +167,75 @@ function App() {
       });
 
       DrawLines();
-      requestAnimationFrame(animateDots);
+      if(viewRef.current !== 'chat') 
+        requestAnimationFrame(animateDots);
+      else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        DrawBackground();
+      }
+    }
+
+    function endingTransition() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      imgOpacityRef.current = 0;
+      setImgOpacity(imgOpacityRef.current);
+    }
+
+    function chatTransitionAnim() {
+      dots.forEach(dot => {
+        dot.x += dot.dx;
+        dot.y += dot.dy;
+        if(dot.x < 0 || dot.x > canvas.width || dot.y < 0 || dot.y > canvas.height) dot.dx = 0, dot.dy = 0;
+        ctx.fillStyle = "rgba(255, 255, 255, 1)";
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, dot.radius, 0, 2 * Math.PI);
+        ctx.fill();
+
+        dot.dx *= 1.05;
+        dot.dy *= 1.05;
+      })
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      ctx.arc(canvas.width/2, canvas.height/2, backgroundRadius, 0, 2 * Math.PI);
+      ctx.fill();
+
+      backgroundRadius *= 1.085;
+      imgOpacityRef.current += backgroundRadius<canvas.width ? 0 : 0.003;
+      setImgOpacity(imgOpacityRef.current); 
+      console.log(imgOpacityRef.current);
+      if(imgOpacityRef.current < 1.5)
+        requestAnimationFrame(chatTransitionAnim);
+      else
+        endingTransition();
+    }
+
+    function toChatTransition() {
+      dots.forEach(dot => {
+        let angle = Math.atan2(dot.y - canvas.height/2, dot.x - canvas.width/2);
+        dot.dx = Math.cos(angle) * 0.25;
+        dot.dy = Math.sin(angle) * 0.25;
+      });
+      chatTransitionAnim();
     }
 
     ResizeCanvas();
-    animateDots();
+
+    if (view === 'chat') {
+      toChatTransition();
+    } else {
+      animateDots();
+    }
 
     window.addEventListener('resize', ResizeCanvas);
-  })
+  }, [view]);
 
  return <div className="container" ref={bgRef}>
-    {view !== 'chat' && <canvas id="dotcanvas" ref={canvasRef}></canvas>}
+    <canvas id="dotcanvas" ref={canvasRef}></canvas>
     {view === 'lobby' && <Lobby onNavigate={setView} />}
     {view === 'signin' && <SignIn onNavigate={setView} />}
     {view === 'menu' && <Menu onNavigate={setView} />}
     {view === 'addchat' && <AddChat onNavigate={setView} />}
+    {view === 'chat' && <Chat onNavigate={setView} imgOpacity={imgOpacity}/>}
  </div>
 }
 
