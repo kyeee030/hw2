@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Lobby from './components/Lobby.jsx';
 import SignIn from './components/SignIn.jsx';
 import Menu from './components/Menu.jsx';
+import AddChat from './components/AddChat.jsx';
 import './style/App.css';
 import './style/style.css';
 
@@ -161,10 +162,11 @@ function App() {
   })
 
  return <div className="container" ref={bgRef}>
-    <canvas id="dotcanvas" ref={canvasRef}></canvas>
+    {view !== 'chat' && <canvas id="dotcanvas" ref={canvasRef}></canvas>}
     {view === 'lobby' && <Lobby onNavigate={setView} />}
     {view === 'signin' && <SignIn onNavigate={setView} />}
     {view === 'menu' && <Menu onNavigate={setView} />}
+    {view === 'addchat' && <AddChat onNavigate={setView} />}
  </div>
 }
 

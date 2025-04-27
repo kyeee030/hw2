@@ -28,7 +28,7 @@ function SignIn({ onNavigate }) {
 
     return(
         <div className="text-context">
-            <h2>Sign In</h2>
+            <h3>Sign In</h3>
             <div className="column">
                 <label htmlFor="email">Email</label>
                 <input type="text" id="email" value={email} onChange={e => setEmail(e.target.value)}/>
@@ -44,7 +44,7 @@ function SignIn({ onNavigate }) {
                     <div className="signbtn" onClick={() => onNavigate('lobby')}>
                         <p className="btntext">Back</p>
                     </div>
-                    <div></div>
+                    <div></div> <div></div>
                     <div className="signbtn" onClick={handleSignIn}>
                         <p className="btntext">Next</p>
                     </div>

@@ -1,9 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import { logout, auth, user } from './auth.js';
+import { getUserChats } from './database.js';
 import '/src/style/menu.css'
 import '/src/style/style.css';
 
 function Menu({ onNavigate }) {
+
+    const [chats, setChats] = useState([]);
+
+    const fetchChats = async () => {
+        const userChats = await getUserChats(user);
+        setChats(userChats || []);
+    }
+    
+    useEffect(() => {
+        fetchChats();
+    }, [chats])
 
     const handleLogOut = async () => {
         await logout(auth);
@@ -12,23 +24,27 @@ function Menu({ onNavigate }) {
 
     return (
         <div className="text-context">
-            <h2>Welcome, {user.displayName}</h2>
+            <h3 className="title">Welcome, {user.displayName}</h3>
             <div className="scrollbar">
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
-                <p>4</p>
-                <p>5</p>
-                <p>6</p>
-                <p>7</p>
-                <p>8</p>
-                <p>9</p>
-                <p>10</p>
-                <p>11</p>
-                <p>12</p>
+                <p>hi</p>
+                {chats.map((chat, index) => (
+                        <div 
+                            key={index} 
+                            className="chatbtn" 
+                            onClick={() => onNavigate('chat')}
+                        >
+                            <p className="btntext">{chat.name} {chat.code}</p>
+                        </div>
+                    ))}
             </div>
-            <div className="menubtn" onClick={handleLogOut}>
-                <p className="btntext">Log Out</p>
+            <div className="row">
+                <div className="menubtn" onClick={handleLogOut}>
+                    <p className="btntext">Log Out</p>
+                </div>
+                <div></div> <div></div>
+                <div className="menubtn" onClick={() => onNavigate('addchat')}>
+                    <p className="btntext">New</p>
+                </div>
             </div>
         </div>
     )

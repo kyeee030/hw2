@@ -1,4 +1,4 @@
-import { getFirestore } from "firebase/firestore";
+import { checkUserDataExist} from './database.js';
 
 import {
   getAuth,
@@ -9,49 +9,15 @@ import {
   signOut,
 } from "firebase/auth";
 
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  setDoc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-} from "firebase/firestore";
-
 import {app} from '../config.js';
-const db = getFirestore(app);
 
 let user = null;
 export {user};
-
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
 export { auth, googleProvider };
-
-async function checkUserDataExist (result) {
-  if (result && result.user) {
-    const userRef = doc(db, "users", result.user.uid);
-    const userDoc = await getDoc(userRef);
-
-    if (!userDoc.exists()) {
-      await setDoc(userRef, {
-        email: result.user.email,
-        displayName: result.user.displayName,
-      });
-      if(result.user.displayName == null) 
-        await updateDoc(userRef, {
-            displayName: result.user.email.split('@')[0],
-        }); 
-      console.log("User document created:", result.user.uid);
-    } else {
-      console.log("User document already exists:", result.user.uid);
-    }
-  }
-}
 
 function setUser (result) {
   if(result && result.user) {

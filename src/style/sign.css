@@ -1,25 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
-
-.text-context {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-  }
   
-  h2 {
-    font-size: 5vw;
+  h3 {
+    font-size: 3vw;
     font-family: "Orbitron", sans-serif;
     font-weight: 400;
     text-transform: capitalize;
     color: #ffffff;
-  }
-  
-  .btntext {
-    font-family: "Orbitron", sans-serif;
-    font-size: 2vw;
-    font-weight: 400;
-    text-transform: capitalize;
-    color: rgba(255, 255, 255, 0.7);
   }
   
   .signbtn:hover p{
