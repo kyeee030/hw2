@@ -2,3 +2,33 @@
     height: 50vh;
     width: 50vh;
 }
+
+.chatScrollbar {
+    overflow-y: scroll;
+    height: 30vh;
+    border: solid 1px black;
+}
+
+.chatScrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.userName {
+    color: black;
+}
+
+.messageBox {
+    border: solid 1px black;
+}
+
+.submitBtn {
+    border: solid 1px black;
+}
+
+.messageContent {
+    color: black;
+}
+
+.submit {
+    color: black;
+}

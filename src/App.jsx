@@ -4,6 +4,7 @@ import SignIn from './components/SignIn.jsx';
 import Menu from './components/Menu.jsx';
 import AddChat from './components/AddChat.jsx';
 import Chat from './components/Chat.jsx';
+import chatBackground from './assets/chatBackground.png';
 import './style/App.css';
 import './style/style.css';
 
@@ -175,10 +176,25 @@ function App() {
       }
     }
 
+    function drawChatBackground() {
+      ctx.fillStyle = "rgba(255, 255, 255, 1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      requestAnimationFrame(drawChatBackground);
+    }
+
     function endingTransition() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      imgOpacityRef.current = 0;
+      imgOpacityRef.current = -1;
       setImgOpacity(imgOpacityRef.current);
+      // const chatImg = new Image();
+      // chatImg.src = chatBackground;
+      // chatImg.onload = () => {
+      //   ctx.drawImage(chatImg, 0, 0, canvas.width, canvas.height);
+      // }
+      ctx.fillStyle = "rgba(255, 255, 255, 1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      drawChatBackground();
     }
 
     function chatTransitionAnim() {
@@ -202,7 +218,6 @@ function App() {
       backgroundRadius *= 1.085;
       imgOpacityRef.current += backgroundRadius<canvas.width ? 0 : 0.003;
       setImgOpacity(imgOpacityRef.current); 
-      console.log(imgOpacityRef.current);
       if(imgOpacityRef.current < 1.5)
         requestAnimationFrame(chatTransitionAnim);
       else

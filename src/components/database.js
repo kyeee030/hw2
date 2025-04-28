@@ -58,11 +58,63 @@ import {
     });
   }
 
+  export async function addNewChat (code, user) {
+    const chatRef = doc(db, "chats", code);
+    const chatDoc = await getDoc(chatRef);
+
+    if (chatDoc.exists()) {
+      const chatData = chatDoc.data();
+      const userRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userRef);
+
+      let userChats = [];
+      const data = userDoc.data();
+      userChats = data.chats || [];
+
+      await updateDoc(userRef, {
+        chats: [...userChats, {code: code, name: chatData.name}],
+      });
+    } else {
+      console.log("No such document!");
+    }
+  }
+
   export async function getUserChats (user) {
     const userRef = doc(db, "users", user.uid);
     const userDoc = await getDoc(userRef);
     if (userDoc.exists()) {
       return userDoc.data().chats;
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  }
+
+  export async function submitMessage(content, user, chatCode) {
+    const chatRef = doc(db, "chats", chatCode);
+    const chatDoc = await getDoc(chatRef);
+
+    if (chatDoc.exists()) {
+      const chatData = chatDoc.data();
+      const message = {
+        userName: user.displayName,
+        content: content,
+      }
+      const updatedMessages = [...chatData.messages, message];
+
+      await updateDoc(chatRef, {
+        messages: updatedMessages,
+      });
+    } else {
+      console.log("No such document!");
+    }
+  }
+
+  export async function getChat(chatCode) {
+    const chatRef = doc(db, "chats", chatCode);
+    const chatDoc = await getDoc(chatRef);
+    if (chatDoc.exists()) {
+      return chatDoc.data();
     } else {
       console.log("No such document!");
       return null;

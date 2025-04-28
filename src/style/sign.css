@@ -12,7 +12,7 @@
     color: rgba(255, 255, 255, 1);
   }
   
-  label {
+  .sign-label {
     font-family: "Orbitron", sans-serif;
     font-size: 1vw;
     font-weight: 400;

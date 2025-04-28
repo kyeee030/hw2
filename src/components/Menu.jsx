@@ -4,6 +4,9 @@ import { getUserChats } from './database.js';
 import '/src/style/menu.css'
 import '/src/style/style.css';
 
+let chatRoomCode = '';
+export {chatRoomCode};
+
 function Menu({ onNavigate }) {
 
     const [chats, setChats] = useState([]);
@@ -22,6 +25,11 @@ function Menu({ onNavigate }) {
         onNavigate('signin');
     }
 
+    function handleChatRoom (code) {
+        chatRoomCode = code;
+        onNavigate('chat');
+    }
+
     return (
         <div className="text-context">
             <h3 className="title">Welcome, {user.displayName}</h3>
@@ -30,8 +38,7 @@ function Menu({ onNavigate }) {
                         <div 
                             key={index} 
                             className="chatbtn" 
-                            onClick={() => onNavigate('chat')}
-                        >
+                            onClick={() => handleChatRoom(chat.code)}>
                             <p className="btntext">{chat.name} {chat.code}</p>
                         </div>
                     ))}

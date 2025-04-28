@@ -30,9 +30,9 @@ function SignIn({ onNavigate }) {
         <div className="text-context">
             <h3>Sign In</h3>
             <div className="column">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email" className="sign-label">Email</label>
                 <input type="text" id="email" value={email} onChange={e => setEmail(e.target.value)}/>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password" className="sign-label">Password</label>
                 <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)}/>
                 <div className="SignGoogle" onClick={handleGoogleSignIn}>
                     <p className="btntext">Sign In with Google</p>

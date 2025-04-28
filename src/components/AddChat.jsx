@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { logout, auth, user } from './auth.js';
-import { createNewChat } from './database.js';
+import { createNewChat, addNewChat } from './database.js';
 import '/src/style/menu.css'
 import '/src/style/style.css';
 
@@ -10,7 +10,11 @@ function AddChat({ onNavigate }) {
     const [code, setCode] = useState('');
 
     const handleAddChat = async () => {
-
+        if (code.length < 1) return;
+        addNewChat(code, user)
+        setName('');
+        setCode('');
+        onNavigate('menu');
     }
 
     const handleCreateChat = async () => {
