@@ -28,25 +28,24 @@ function SignIn({ onNavigate }) {
 
     return(
         <div className="text-context">
-            <h3>Sign In</h3>
+            <h3 className="cyberpunk glitched3">Sign In</h3>
             <div className="column">
                 <label htmlFor="email" className="sign-label">Email</label>
-                <input type="text" id="email" value={email} onChange={e => setEmail(e.target.value)}/>
+                <input type="text" id="email" className="cyberpunk glitched" value={email} onChange={e => setEmail(e.target.value)}/>
                 <label htmlFor="password" className="sign-label">Password</label>
-                <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)}/>
+                <input type="password" id="password" className="cyberpunk glitched" value={password} onChange={e => setPassword(e.target.value)}/>
                 <div className="SignGoogle" onClick={handleGoogleSignIn}>
-                    <p className="btntext">Sign In with Google</p>
+                    <h2 className="btntext cyberpunk glitched2">Sign In with Google</h2>
                 </div>
                 <div className="SignGoogle" onClick={handleSignUp}>
-                    <p className="btntext">Register</p>
+                    <h2 className="btntext cyberpunk glitched">Register</h2>
                 </div>
                 <div className="row">
                     <div className="signbtn" onClick={() => onNavigate('lobby')}>
-                        <p className="btntext">Back</p>
+                        <h2 className="btntext cyberpunk glitched2">Back</h2>
                     </div>
-                    <div></div> <div></div>
                     <div className="signbtn" onClick={handleSignIn}>
-                        <p className="btntext">Next</p>
+                        <h2 className="btntext cyberpunk glitched">Next</h2>
                     </div>
                 </div>
             </div>

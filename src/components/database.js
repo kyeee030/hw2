@@ -39,6 +39,11 @@ import {
 
   export async function createNewChat (name, code, user) {
     const chatRef = doc(db, "chats", code);
+    const chatDoc = await getDoc(chatRef);
+    if (!chatDoc.exists()) {
+      
+    }
+
     await setDoc(chatRef, {
       name: name,
       code: code,
