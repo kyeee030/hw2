@@ -32,6 +32,7 @@ function App() {
 
     let dots = [];
     let stars = [];
+    let ripple = [];
 
     function ResizeCanvas() {
       canvas.width = window.innerWidth;
@@ -41,6 +42,16 @@ function App() {
         CreateStars();
         if(view === 'chat')
           setIsChat(true);
+      } else {
+        createRipple();
+        if(view != 'chat') {
+          setIsChat(false);
+          CreateDots();
+          CreateStars();
+          imgOpacityRef.current = 0;
+          setImgOpacity(imgOpacityRef.current);
+          ripple = [];
+        }
       }
     }
 
@@ -167,7 +178,7 @@ function App() {
         ctx.fill();
       });
 
-      DrawLines();
+      DrawLines(); 
       if(viewRef.current !== 'chat') 
         requestAnimationFrame(animateDots);
       else {
@@ -177,24 +188,94 @@ function App() {
     }
 
     function drawChatBackground() {
-      ctx.fillStyle = "rgba(255, 255, 255, 1)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      let gradient = ctx.createRadialGradient(
+        canvas.width/2, canvas.height/2, 50,
+        canvas.width/2, canvas.height/2, canvas.width/2
+      )
+      let color1 = "#D0FAFF";
+      let color2 = "#E0F6FC";
+      let color3 = "#D9F2F1";
 
-      requestAnimationFrame(drawChatBackground);
+      gradient.addColorStop(0, color1);
+      gradient.addColorStop(0.5, color2);
+      gradient.addColorStop(1, color3);
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function createRipple() {
+      ripple = [];
+      for(let i=0; i<50; ++i) {
+        ripple.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+
+          radius: 0,
+          speed: Math.random() * 0.05 + 0.05,
+          time: 0 - Math.random() * 15,
+        })
+      }
+    }
+
+    function drawRipple() {
+      ripple.forEach(rip => {
+        if(rip.time > 0) {
+          rip.radius += 0.5;
+          const layers = [
+            { color: '224, 246, 252, ', a: 1, blur: 100, radiusOffset: 0 },
+            { color: '255, 255, 255, ', a: 0.4, blur: 100, radiusOffset: 3 },
+            { color: '224, 246, 252, ', a: 1, blur: 100, radiusOffset: 6 },
+            { color: '0, 0, 100, ', a: 0.08, blur: 100, radiusOffset: 9 }
+          ];
+
+          layers.forEach(layer => {
+            const alpha = (layer.a==1) ? 1 : (1 - rip.time / 16) * layer.a;
+            ctx.beginPath();
+            ctx.shadowColor = `rgb(${layer.color})`;
+            ctx.shadowBlur = 100;
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = `rgba(${layer.color}${alpha})`;
+            ctx.arc(rip.x, rip.y, rip.radius + layer.radiusOffset, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.closePath();
+          });
+        }
+      })
+    }
+
+    function waterAnimation() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      drawChatBackground();
+      drawRipple();
+
+      ripple.forEach(rip => {
+        rip.time += rip.speed;
+        if(rip.time > 15) {
+          rip.x = Math.random() * canvas.width;
+          rip.y = Math.random() * canvas.height;
+
+          rip.radius = 0;
+          rip.speed = Math.random() * 0.05 + 0.05;
+          rip.time = 0;
+        }
+      })
+      if(viewRef.current === 'chat')
+        requestAnimationFrame(waterAnimation);
+      else
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
     function endingTransition() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       imgOpacityRef.current = -1;
       setImgOpacity(imgOpacityRef.current);
-      // const chatImg = new Image();
-      // chatImg.src = chatBackground;
-      // chatImg.onload = () => {
-      //   ctx.drawImage(chatImg, 0, 0, canvas.width, canvas.height);
-      // }
       ctx.fillStyle = "rgba(255, 255, 255, 1)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      drawChatBackground();
+      dots = [];
+      createRipple();
+      waterAnimation();
     }
 
     function chatTransitionAnim() {

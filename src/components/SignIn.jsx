@@ -12,6 +12,10 @@ function SignIn({ onNavigate }) {
         let result = await loginWithEmail(email, password);
         if (result && result.user) 
             onNavigate('menu');
+        else
+            alert("Invalid email or password!");
+        setEmail('');
+        setPassword('');
     };
 
     const handleGoogleSignIn = async () => {
@@ -24,7 +28,11 @@ function SignIn({ onNavigate }) {
         let result = await registerWithEmail(email, password);
         if (result && result.user) 
             onNavigate('menu');
-        };
+        else
+            alert("Invalid email or password!");
+        setEmail('');
+        setPassword('');
+    };
 
     return(
         <div className="text-context">

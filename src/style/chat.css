@@ -3,32 +3,106 @@
     width: 50vh;
 }
 
+h1 {
+    color: rgba(84, 119, 146, 0.8);
+    font-family: "Modak", system-ui;
+    font-size: 3vw;
+    font-weight: 200;
+    margin: 1vh 0;
+    text-shadow: 0 0 5vh rgba(84, 119, 146, 0.5);
+}
+
 .chatScrollbar {
     overflow-y: scroll;
-    height: 30vh;
-    border: solid 1px black;
+    height: 70vh;
+    width: 40vw;
+    border: solid 2px rgba(84, 119, 146, 0.5);
+    border-radius: 5vh;
+    background-color: rgba(84, 119, 146, 0.1);
+    box-shadow: 0 0 5vh rgba(84, 119, 146, 0.2);
+    margin-bottom: 5vh;
 }
 
 .chatScrollbar::-webkit-scrollbar {
     display: none;
 }
 
-.userName {
-    color: black;
+.message {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1vh;
+}
+
+.userName { 
+    color: #8E7DBE;
+    font-family: "Modak", system-ui;
+    font-size: 1vw;
+    font-weight: 200;
 }
 
 .messageBox {
-    border: solid 1px black;
-}
-
-.submitBtn {
-    border: solid 1px black;
+    border: solid 1px rgba(142, 125, 190, 0.7);
+    border-radius: 1vh;
+    max-width: 20vw;
+    background-color: rgba(142, 125, 190, 0.3);
+    box-shadow: 0 0 5vh rgba(142, 125, 190, 0.3);
+    padding: 0.5vh 1vw;
 }
 
 .messageContent {
-    color: black;
+    color: rgba(34, 34, 34, 0.8);
+    /* font-family: "Modak", system-ui; */
+    font-size: 1vw;
+    font-weight: 400;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: left;
+}
+
+.typingBox {
+    border: solid 1px rgba(74, 16, 42, 0.5);
+    border-radius: 1.5vh;
+    background-color: rgba(74, 16, 42, 0.1);
+    box-shadow: 0 0 5vh rgba(74, 16, 42, 0.2);
+    color: #4A102A;
+    font-size: 1vw;
+    font-weight: 200;
+    margin: 1vh 0;
+    padding: 1vh 0.5vw;
+    width: 20vw;
+}
+
+.submitBtn {
+    border: solid 1px rgba(74, 16, 42, 0.5);
+    border-radius: 2vh;
+    background-color: rgba(74, 16, 42, 0.1);
+    box-shadow: 0 0 5vh rgba(74, 16, 42, 0.2);
+}
+
+.submitBtn:hover {
+    background-color: rgba(74, 16, 42, 0.2);
+    box-shadow: 0 0 5vh rgba(74, 16, 42, 0.4);
 }
 
 .submit {
-    color: black;
+    color: rgba(74, 16, 42, 0.8);
+    font-family: "Modak", system-ui;
+    font-size: 1.5vw;
+    font-weight: 200;
+    margin: 1vh 0.5vw;
+}
+
+.leave {
+    color: rgba(162, 185, 167, 0.9);
+    font-family: "Modak", system-ui;
+    font-size: 1.5vw;
+    font-weight: 200;
+    text-shadow: 0 0 5vh rgba(162, 185, 167, 0.5);
+    margin: 1vh 0.5vw;
+}
+
+.leaveBtn {
+    position: absolute;
+    top: 2vh;
+    left: 2vw;
 }

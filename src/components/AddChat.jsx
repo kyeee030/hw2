@@ -11,14 +11,18 @@ function AddChat({ onNavigate }) {
 
     const handleAddChat = async () => {
         if (code.length < 1) return;
-        addNewChat(code, user)
         setName('');
         setCode('');
-        onNavigate('menu');
+        if (addNewChat(code, user))
+            onNavigate('menu');
     }
 
     const handleCreateChat = async () => {
-        if (name.length < 1) return;
+        if (name.length < 1)
+        {
+            alert('Please enter a name for the chat!');
+            return;
+        }
         const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         let code = '';
         for (let i = 0; i < 6; i++) {
@@ -33,6 +37,7 @@ function AddChat({ onNavigate }) {
 
     return (
         <div className="text-context">
+            <div id="custom-alert"></div>
             <h3 className="title">Welcome, {user.displayName}</h3>
             <div className="row">
                 <input type="text" placeholder="Chat Code" value={code} onChange={(e) => setCode(e.target.value)}/>

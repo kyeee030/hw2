@@ -20,6 +20,22 @@ function Menu({ onNavigate }) {
         fetchChats();
     }, [chats])
 
+    useEffect(() => {   
+        if (Notification.permission === 'granted') {
+            new Notification('Welcome to the chat app!', {
+                body: 'You can now start chatting with your friends!',
+            });
+        } else if (Notification.permission !== 'denied') {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    new Notification('Welcome to the chat app!', {
+                        body: 'You can now start chatting with your friends!',
+                    });
+                }
+            });
+        }
+    }, []);
+
     const handleLogOut = async () => {
         await logout(auth);
         onNavigate('signin');
@@ -32,24 +48,24 @@ function Menu({ onNavigate }) {
 
     return (
         <div className="text-context">
-            <h3 className="title">Welcome, {user.displayName}</h3>
-            <div className="scrollbar">
+            <h3 className="cyberpunk glitched3">Welcome, {user.displayName}</h3>
+            <div className="scrollbar cyberpunk glitched">
                 {chats.map((chat, index) => (
                         <div 
                             key={index} 
                             className="chatbtn" 
                             onClick={() => handleChatRoom(chat.code)}>
-                            <p className="btntext">{chat.name} {chat.code}</p>
+                            <span>{chat.name}</span>
+                            <span>{chat.code}</span>
                         </div>
                     ))}
             </div>
             <div className="row">
                 <div className="menubtn" onClick={handleLogOut}>
-                    <p className="btntext">Log Out</p>
+                    <h2 className="btntext cyberpunk glitched">Log Out</h2>
                 </div>
-                <div></div> <div></div>
                 <div className="menubtn" onClick={() => onNavigate('addchat')}>
-                    <p className="btntext">New</p>
+                    <h2 className="btntext cyberpunk glitched2">New</h2>
                 </div>
             </div>
         </div>

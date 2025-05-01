@@ -15,6 +15,7 @@ import {
   const db = getFirestore(app);
   export {db};
 
+
   export async function checkUserDataExist (result) {
     if (result && result.user) {
       const userRef = doc(db, "users", result.user.uid);
@@ -39,10 +40,6 @@ import {
 
   export async function createNewChat (name, code, user) {
     const chatRef = doc(db, "chats", code);
-    const chatDoc = await getDoc(chatRef);
-    if (!chatDoc.exists()) {
-      
-    }
 
     await setDoc(chatRef, {
       name: name,
@@ -79,8 +76,12 @@ import {
       await updateDoc(userRef, {
         chats: [...userChats, {code: code, name: chatData.name}],
       });
+
+      return true;
     } else {
       console.log("No such document!");
+      alert("Error! The Chat Code doesn't exist!");
+      return false;
     }
   }
 

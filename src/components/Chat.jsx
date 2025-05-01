@@ -20,6 +20,7 @@ function Chat({ onNavigate, imgOpacity }) {
     }, [])
 
     async function handleSubmit() {
+        if(message.trim() === '') return;
         await submitMessage(message, user, chatRoomCode);
         setMessage('');
         const updatedChat = await getChat(chatRoomCode);
@@ -27,19 +28,22 @@ function Chat({ onNavigate, imgOpacity }) {
     }
 
     return (
-        <div className="text-context">
+        <div className="text-context">  
             {imgOpacity!=-1 && <img 
                 src={titleimg} 
                 alt="" 
                 className="goodimg" 
                 style={{ opacity: imgOpacity}}/>}
+            {imgOpacity==-1 && <h1>{chatData.name}</h1>}
             {imgOpacity==-1 && <div className="chatScrollbar">
                 {chatData?.messages?.map((m, index) => (
                         <div 
                             key={index} 
-                            className="message" >
-                            <label htmlFor="messageBox" className="userName">{m.userName}</label>
-                            <div className="messageBox" id='messageBox'>
+                            className="message" style={m.userName==user.displayName ? 
+                            {alignItems: 'flex-end'} : 
+                            {alignItems: 'flex-start'}}>
+                            <label htmlFor={`messageBox${index}`} className="userName">{m.userName}</label>
+                            <div className="messageBox" id={`messageBox${index}`}>
                                 <p className="messageContent">{m.content}</p>
                             </div>
                         </div>
@@ -50,6 +54,9 @@ function Chat({ onNavigate, imgOpacity }) {
                 <div className="submitBtn" onClick={handleSubmit}>
                     <p className="submit">Submit</p>
                 </div>
+            </div>}
+            {imgOpacity==-1 && <div onClick={() => onNavigate('menu')} className="leaveBtn">
+                <p className="leave">Leave</p>
             </div>}
         </div>
     )
