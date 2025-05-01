@@ -20,6 +20,7 @@ function App() {
   const imgOpacityRef = useRef(0);
 
   const [isChat, setIsChat] = useState(false);
+  const [unsendMessages, setUnsendMessages] = useState('');
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -329,9 +330,9 @@ function App() {
     <canvas id="dotcanvas" ref={canvasRef}></canvas>
     {view === 'lobby' && <Lobby onNavigate={setView} />}
     {view === 'signin' && <SignIn onNavigate={setView} />}
-    {view === 'menu' && <Menu onNavigate={setView} />}
+    {view === 'menu' && <Menu onNavigate={setView} setUnsendMessages={setUnsendMessages}/>}
     {view === 'addchat' && <AddChat onNavigate={setView} />}
-    {view === 'chat' && <Chat onNavigate={setView} imgOpacity={imgOpacity}/>}
+    {view === 'chat' && <Chat onNavigate={setView} imgOpacity={imgOpacity} setUnsendMessages={setUnsendMessages} UnsendMessages={unsendMessages}/>}
  </div>
 }
 

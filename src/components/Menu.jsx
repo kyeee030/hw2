@@ -5,9 +5,9 @@ import '/src/style/menu.css'
 import '/src/style/style.css';
 
 let chatRoomCode = '';
-export {chatRoomCode};
+export { chatRoomCode };
 
-function Menu({ onNavigate }) {
+function Menu({ onNavigate, setUnsendMessages }) {
 
     const [chats, setChats] = useState([]);
 
@@ -42,6 +42,8 @@ function Menu({ onNavigate }) {
     }
 
     function handleChatRoom (code) {
+        if (code !== chatRoomCode)
+            setUnsendMessages('');
         chatRoomCode = code;
         onNavigate('chat');
     }
