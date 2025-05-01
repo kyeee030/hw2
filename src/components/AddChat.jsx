@@ -40,13 +40,13 @@ function AddChat({ onNavigate }) {
             <div id="custom-alert"></div>
             <h3 className="title">Welcome, {user.displayName}</h3>
             <div className="row">
-                <input type="text" placeholder="Chat Code" value={code} onChange={(e) => setCode(e.target.value)}/>
+                <input type="text" className="cyberpunk glitched gg" placeholder="Chat Code" value={code} onChange={(e) => setCode(e.target.value)}/>
                 <div className="menubtn" onClick={handleAddChat}>
                     <p className="btntext">Add</p>
                 </div>
             </div>
             <div className="row">
-                <input type="text" placeholder="New Chat Name" value={name} onChange={(e) => setName(e.target.value)}/>
+                <input type="text" className="cyberpunk glitched gg" placeholder="New Chat Name" value={name} onChange={(e) => setName(e.target.value)}/>
                 <div className="menubtn" onClick={handleCreateChat}>
                     <p className="btntext">Create</p>
                 </div>

@@ -193,9 +193,9 @@ function App() {
         canvas.width/2, canvas.height/2, 50,
         canvas.width/2, canvas.height/2, canvas.width/2
       )
-      let color1 = "#D0FAFF";
-      let color2 = "#E0F6FC";
-      let color3 = "#D9F2F1";
+      let color1 = "#273F4F";//"#D0FAFF";
+      let color2 = "#213448";//"#E0F6FC";
+      let color3 = "#06202B";//"#D9F2F1";
 
       gradient.addColorStop(0, color1);
       gradient.addColorStop(0.5, color2);
@@ -224,9 +224,9 @@ function App() {
         if(rip.time > 0) {
           rip.radius += 0.5;
           const layers = [
-            { color: '224, 246, 252, ', a: 1, blur: 100, radiusOffset: 0 },
+            { color: '33, 52, 72, ', a: 1, blur: 100, radiusOffset: 0 },
             { color: '255, 255, 255, ', a: 0.4, blur: 100, radiusOffset: 3 },
-            { color: '224, 246, 252, ', a: 1, blur: 100, radiusOffset: 6 },
+            { color: '33, 52, 72, ', a: 1, blur: 100, radiusOffset: 6 },
             { color: '0, 0, 100, ', a: 0.08, blur: 100, radiusOffset: 9 }
           ];
 

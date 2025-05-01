@@ -52,6 +52,11 @@
     /*caret-shape: underscore;*/
   }
 
+  input[type="text"].cyberpunk.gg{
+    width: 20vw;
+    height: 5vh;
+  }
+
   input[type="password"].cyberpunk,
   .cyberpunk input[type="password"] {
     font-family: 'Hacked';

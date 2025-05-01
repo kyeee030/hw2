@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { logout, auth, user } from './auth.js';
-import { submitMessage, getChat } from './database.js';
+import { submitMessage, getChat, deleteMessage } from './database.js';
 import { chatRoomCode } from './Menu.jsx';
 import titleimg from '/src/assets/title.png';
 import GifPicker from 'gif-picker-react';
@@ -37,6 +37,18 @@ function Chat({ onNavigate, imgOpacity, setUnsendMessages, UnsendMessages }) {
         onNavigate('menu');
     }
 
+    async function handleRightClick(e, messageObj, index) {
+        e.preventDefault();
+        if (messageObj.userName !== user.displayName) return;
+    
+        const confirmed = window.confirm("Unsend this message?");
+        if (!confirmed) return;
+    
+        await deleteMessage(chatRoomCode, index);
+        const updatedChat = await getChat(chatRoomCode);
+        setChatData(updatedChat);
+    }
+
     return (
         <div className="text-context">  
             {imgOpacity!=-1 && <img 
@@ -46,7 +58,7 @@ function Chat({ onNavigate, imgOpacity, setUnsendMessages, UnsendMessages }) {
                 style={{ opacity: imgOpacity}}/>}
             {imgOpacity==-1 && <h1>{chatData.name}</h1>}
             <div className="row">
-                {imgOpacity==-1 && <div className="picker">
+                {imgOpacity==-1 && <div className="picker twinkle3">
                     <GifPicker 
                         tenorApiKey={"AIzaSyCpDlJFAM5ISwZ2Qf5fPSsW213-gUnT42s"} 
                         onGifClick={(gif, e) => {
@@ -63,7 +75,8 @@ function Chat({ onNavigate, imgOpacity, setUnsendMessages, UnsendMessages }) {
                     {chatData?.messages?.filter(m => m.content.toLowerCase().includes(searchContent.toLowerCase()))
                     .map((m, index) => (
                             <div 
-                                key={index} 
+                                key={index}
+                                onContextMenu={(e) => handleRightClick(e, m, index)} 
                                 className="message" style={m.userName==user.displayName ? 
                                 {alignItems: 'flex-end'} : 
                                 {alignItems: 'flex-start'}}>
@@ -79,18 +92,17 @@ function Chat({ onNavigate, imgOpacity, setUnsendMessages, UnsendMessages }) {
                         ))}
                 </div>}
                 {imgOpacity==-1 && <div className="searchbox">
-                    <label htmlFor="search" className="searchlabel"></label>
-                    <input type="text" className="search" id="search" placeholder="Searching..." value={searchContent} onChange={(e) => setSearchContent(e.target.value)}/>
+                    <input type="text" className="search twinkle1" id="search" placeholder="Searching..." value={searchContent} onChange={(e) => setSearchContent(e.target.value)}/>
                 </div>}
             </div>
             {imgOpacity==-1 && <div className="row">
-                <input type="text" className="typingBox" placeholder="Type somthing..." value={message} onChange={(e) => setMessage(e.target.value)}/>
-                <div className="submitBtn" onClick={handleSubmit}>
+                <input type="text" className="typingBox twinkle2" placeholder="Type somthing..." value={message} onChange={(e) => setMessage(e.target.value)}/>
+                <div className="submitBtn twinkle2" onClick={handleSubmit}>
                     <p className="submit">Submit</p>
                 </div>
             </div>}
             {imgOpacity==-1 && <div onClick={handleLeave} className="leaveBtn">
-                <p className="leave">Leave</p>
+                <p className="leave twinkle4">Leave</p>
             </div>}
         </div>
     )

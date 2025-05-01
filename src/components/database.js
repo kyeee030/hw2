@@ -126,3 +126,19 @@ import {
       return null;
     }
   }
+
+  export async function deleteMessage(chatCode, messageId) {
+    const chatRef = doc(db, "chats", chatCode);
+    const chatDoc = await getDoc(chatRef);
+  
+    if (chatDoc.exists()) {
+      const chatData = chatDoc.data();
+      const updatedMessages = chatData.messages.filter((_, index) => index !== messageId);
+  
+      await updateDoc(chatRef, {
+        messages: updatedMessages,
+      });
+    } else {
+      console.log("No such document!");
+    }
+  }
